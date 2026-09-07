@@ -1,5 +1,5 @@
 import db from '../db.js'
-import { DataTypes, DECIMAL } from 'sequelize'
+import { DataTypes} from 'sequelize'
 
 const User = db.define('user', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
@@ -50,6 +50,10 @@ const TypeBrand = db.define('typebrand', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true}
 })
 
+const RefreshToken = db.define('token', {  //FIXME: в таблице не появляяется поле token
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    token: {type: DataTypes.STRING, allowNull: false}
+})
 
 User.hasOne(Basket)
 Basket.belongsTo(User)
@@ -78,6 +82,9 @@ Rating.belongsTo(User)
 Device.hasMany(Rating)
 Rating.belongsTo(Device)
 
+User.hasOne(RefreshToken)
+RefreshToken.belongsTo(User)
+
 
 export default {
     User,
@@ -88,5 +95,6 @@ export default {
     Type,
     Brand,
     Rating,
-    TypeBrand
+    TypeBrand,
+    RefreshToken
 }
