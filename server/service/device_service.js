@@ -1,4 +1,5 @@
 import models from '../models/models.js'
+import ApiError from '../exceptions/api_errors.js'
 class DeviceService {
 
     async create(name, img, price, typeId, brandId) {
@@ -21,7 +22,7 @@ class DeviceService {
     async getOneDevice(id) {
         const device = await models.Device.findByPk(id)
         if (!device) {
-            throw new Error()
+            throw ApiError.NotFound('Устройство не найдено')
         }
         return device
     }
@@ -30,7 +31,7 @@ class DeviceService {
     async deleteDevice(id) {
         const device = await models.Device.findByPk(id)
         if (!device) {
-            throw new Error()
+            throw ApiError.NotFound('Устройство не найдено')
         } 
         await device.destroy()
         return device

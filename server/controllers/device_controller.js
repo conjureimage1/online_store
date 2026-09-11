@@ -1,17 +1,21 @@
 import deviceService from '../service/device_service.js'
-
+import {v4} from 'uuid'
+import path from 'path'
 
 class DeviceController {
 
 
-    async createDevice(req, res, next) { //TODO: добавить работу с изображением
+    async createDevice(req, res, next) { 
         try {
-            const {name, img, price, typeId, brandId} = req.body
-            const device = await deviceService.create(name, img, price, typeId, brandId)
+            const {name, price, typeId, brandId} = req.body
+            const {img} = req.files
+            const imgName = v4() + ".jpg"
+            img.mv(path.resolve('..', 'server', 'static', imgName))
+            const device = await deviceService.create(name, imgName, price, typeId, brandId)
             return res.json(device)
 
         } catch (e) {
-            console.log(e)
+            next(e)
         }
     }
 
