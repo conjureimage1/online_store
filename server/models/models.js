@@ -61,8 +61,8 @@ Basket.belongsTo(User)
 Basket.hasMany(Basket_Device)
 Basket_Device.belongsTo(Basket)
 
-Basket_Device.hasOne(Device)
-Device.belongsTo(Basket_Device)
+Device.hasOne(Basket_Device)
+Basket_Device.belongsTo(Device)
 
 Device.hasMany(Device_info)
 Device_info.belongsTo(Device)

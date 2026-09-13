@@ -2,6 +2,7 @@ import models from '../models/models.js'
 import bcrypt from 'bcrypt'
 import UserDto from '../dtos/user_dto.js'
 import tokenService from './token_service.js'
+import basketService from './basket_service.js'
 import ApiError from '../exceptions/api_errors.js'
 
 class Userservice {
@@ -13,7 +14,7 @@ class Userservice {
         }
         const hashPassword = await bcrypt.hash(password, 3)
         const user = await models.User.create({email: email, password: hashPassword})
-
+        const basket = await basketService.createBasket(user.id)
         const userData = await this.createUserData(user)
         return userData
     }

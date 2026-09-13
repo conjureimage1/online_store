@@ -42,7 +42,7 @@ class DeviceController {
             const device = await deviceService.deleteDevice(id)
             return res.json(device)
         } catch (e) {
-            return res.status(404).json('Пользователь с таким id не найден')
+            next(e)
         }
     }
 
@@ -51,7 +51,7 @@ class DeviceController {
         try {
 
         } catch (e) {
-            console.log(e)
+            next(e)
         }
     }
 }
