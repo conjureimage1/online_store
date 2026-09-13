@@ -62,7 +62,7 @@ class Userservice {
 
 
     async createUserData(user) {
-        const userDto = new UserDto(user.id, user.email, user.role) //TODO: сделать сохранение токена в бд
+        const userDto = new UserDto(user.id, user.email, user.role) 
         const tokens = tokenService.createTokens({...userDto})
         const saveToken = await tokenService.saveToken(user.id, tokens.refreshToken)
         return {...tokens, user: userDto}

@@ -4,8 +4,7 @@ import deviceController from '../controllers/device_controller.js'
 const deviceRouter = new Router()
 
 deviceRouter.post('/create', deviceController.createDevice)
-deviceRouter.get('/', deviceController.getAllDevices)
-deviceRouter.get('/:id', deviceController.getOneDevice)
+deviceRouter.get('/', deviceController.getDevices)
 deviceRouter.post('/rate/:id', deviceController.rateDevice)
 deviceRouter.delete('/:id', deviceController.deleteDevice)
 

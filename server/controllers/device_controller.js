@@ -1,6 +1,7 @@
 import deviceService from '../service/device_service.js'
 import {v4} from 'uuid'
 import path from 'path'
+import ApiError from '../exceptions/api_errors.js'
 
 class DeviceController {
 
@@ -20,23 +21,17 @@ class DeviceController {
     }
 
 
-    async getAllDevices(req, res, next) {
+    async getDevices(req, res, next) {
         try {
-            const devices = await deviceService.getAllDevices()
+            let {id, typeId, brandId, limit, page} = req.query
+            page = page || 1
+            limit = limit || 9
+            let offset = page * limit - limit
+            const devices = await deviceService.getDevices(id, typeId, brandId, limit, offset)
+
             return res.json(devices)
         } catch (e) {
-            return res.status(400).json(e)
-        }
-    }
-
-
-    async getOneDevice(req, res, next) {
-        try {
-            const id = req.params.id
-            const device = await deviceService.getOneDevice(id)
-            return res.json(device)
-        } catch (e) {
-            return res.status(404).json('Пользователь с таким id не найден')
+            next(e)
         }
     }
 

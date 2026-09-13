@@ -13,9 +13,30 @@ class DeviceService {
         return device
     }
 
-    async getAllDevices() {
-        const devices = await models.Device.findAll()
-        return devices
+    async getDevices(id=null, typeId=null, brandId=null, limit=null, offset=null) {
+        let devices
+
+        if (id) {
+            devices = await models.Device.findAndCountAll({where: {id}})
+        }
+
+        if (typeId && !brandId) {
+            devices = await models.Device.findAndCountAll({where: {typeId}, limit, offset})
+        }
+
+         if (!typeId && brandId) {
+            devices = await models.Device.findAndCountAll({where: {brandId}, limit, offset})
+        }
+
+         if (typeId && brandId) {
+            devices = await models.Device.findAndCountAll({where: {typeId, brandId}, limit, offset})
+        }
+
+        if (devices.count == 0) {
+            throw ApiError.NotFound('Устройства не найдены')
+        }
+
+        return devices.rows
     }
 
 
