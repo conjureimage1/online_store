@@ -50,7 +50,7 @@ const TypeBrand = db.define('typebrand', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true}
 })
 
-const RefreshToken = db.define('token', {  //FIXME: в таблице не появляяется поле token
+const RefreshToken = db.define('token', {  
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     token: {type: DataTypes.STRING, allowNull: false}
 })

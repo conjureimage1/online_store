@@ -14,10 +14,13 @@ class BasketController {
     }
 
 
-    async getBasketDevices(req, res, next) { //TODO: сделать фильтр поиска
+    async getBasketDevices(req, res, next) {
         try {
-            const {basketId} = req.query
-            const devices = await basketService.getBasketDevices(basketId)
+            let {basketId, limit, page} = req.query
+            page = page || 1
+            limit = limit || 9
+            let offset = page * limit - limit
+            const devices = await basketService.getBasketDevices(basketId, limit, offset) 
             return res.json(devices)
         } catch (e) {
             next(e)

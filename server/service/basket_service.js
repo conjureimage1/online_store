@@ -14,9 +14,9 @@ class BasketService {
         return basketDevice
     }
 
-    async getBasketDevices(basketId) {
-        const devices = await models.Basket_Device.findAll({where: {basketId}})
+    async getBasketDevices(basketId, limit, offset) {
 
+        const devices = await models.Basket_Device.findAll({where: {basketId}, limit, offset})
         if (!devices) {
             throw ApiError.BadRequest('Устройства не найдены')
         }

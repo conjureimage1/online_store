@@ -1,20 +1,24 @@
 import deviceService from '../service/device_service.js'
 import {v4} from 'uuid'
 import path from 'path'
-import ApiError from '../exceptions/api_errors.js'
+import infoService from '../service/info_service.js'
 
 class DeviceController {
 
 
     async createDevice(req, res, next) { 
         try {
-            const {name, price, typeId, brandId} = req.body
+            let {name, price, typeId, brandId, info} = req.body
             const {img} = req.files
             const imgName = v4() + ".jpg"
             img.mv(path.resolve('..', 'server', 'static', imgName))
             const device = await deviceService.create(name, imgName, price, typeId, brandId)
-            return res.json(device)
 
+            if (info) {
+                infoService.createDeviceInfo(info, device.id)
+            }
+            
+            return res.json(device)
         } catch (e) {
             next(e)
         }
