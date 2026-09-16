@@ -16,10 +16,6 @@ class DeviceService {
     async getDevices(id=null, typeId=null, brandId=null, limit=null, offset=null) {
         let devices
 
-        if (id) {
-            devices = await models.Device.findAndCountAll({where: {id}})
-        }
-
         if (typeId && !brandId) {
             devices = await models.Device.findAndCountAll({where: {typeId}, limit, offset})
         }

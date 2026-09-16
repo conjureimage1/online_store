@@ -1,4 +1,5 @@
 import deviceService from '../service/device_service.js'
+import ratingService from '../service/rating_service.js'
 import {v4} from 'uuid'
 import path from 'path'
 import infoService from '../service/info_service.js'
@@ -39,6 +40,15 @@ class DeviceController {
         }
     }
 
+     async getOneDevice(req, res, next) {
+        try {
+            const {id} = req.params
+            const device = await deviceService.getOneDevice(id)
+            return res.json(device)
+        } catch (e) {
+            next(e)
+        }
+    }
 
     async deleteDevice(req, res, next) {
         try {
@@ -51,13 +61,18 @@ class DeviceController {
     }
 
 
-    async rateDevice(req, res, next) {
+     async rateDevice(req, res, next) {
         try {
-
+            const {rating} = req.body
+            const deviceId = req.params.id
+            const {userId} = req.query
+            const updatedDevice = await ratingService.rateDevice(rating, deviceId, userId)
+            return res.json(updatedDevice)
         } catch (e) {
             next(e)
         }
     }
+
 }
 
 export default new DeviceController()
