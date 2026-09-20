@@ -3,6 +3,11 @@ import 'dotenv/config'
 import tokenService from '../service/token_service.js'
 
 export default async function (req, res, next) {
+
+    if (req.method === 'OPTIONS') {
+            next()
+    }
+
     if (!req.headers.authorization) {
         next(ApiError.UnauthorizedError())
     }

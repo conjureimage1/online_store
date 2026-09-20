@@ -2,10 +2,10 @@ export default class UserDto {
     id;
     email;
     role;
-    constructor(id, email, role) {
+    constructor(id, email, roles) {
         this.id = id
         this.email = email
-        this.role = role
+        this.roles = roles
     }
 }
 

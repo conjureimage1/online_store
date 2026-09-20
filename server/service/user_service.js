@@ -7,13 +7,13 @@ import ApiError from '../exceptions/api_errors.js'
 
 class Userservice {
 
-    async registration(email, password) {
+    async registration(email, password, roles) {
         const candidate = await models.User.findOne({where: {email: email}})
         if (candidate) {
             throw ApiError.BadRequest('Пользователь с таким email уже зарегистрирован')
         }
         const hashPassword = await bcrypt.hash(password, 3)
-        const user = await models.User.create({email: email, password: hashPassword})
+        const user = await models.User.create({email: email, password: hashPassword, role: roles})
         const basket = await basketService.createBasket(user.id)
         const userData = await this.createUserData(user)
         return userData
@@ -24,7 +24,7 @@ class Userservice {
         if (!user) {
             throw ApiError.BadRequest('Пользователь не зарегестрирован')
         }
-            const ValidatePassword = await bcrypt.compare(password, user.password)
+        const ValidatePassword = await bcrypt.compare(password, user.password)
 
         if (!ValidatePassword) {
             throw ApiError.BadRequest('Неверный пароль')

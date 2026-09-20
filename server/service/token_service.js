@@ -12,6 +12,10 @@ class TokenService {
     }
 
     async saveToken(userId, refreshToken) {
+        const oldToken = await models.RefreshToken.findOne({where: {userId: userId}})
+        if (oldToken) {
+            await oldToken.destroy()
+        }
         const token = await models.RefreshToken.create({userId: userId, token: refreshToken})
         return token
     }

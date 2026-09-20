@@ -23,4 +23,9 @@ export default class ApiError extends Error {
     static NotFound(message='Не найдено', errors=[]) {
         return new ApiError(404, message, errors)
     }
+
+
+    static NoAccess(message='Нет доступа', errors=[]) {
+        return new ApiError(403, message, errors)
+    }
 }

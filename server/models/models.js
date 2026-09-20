@@ -5,7 +5,7 @@ const User = db.define('user', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     email: {type: DataTypes.STRING, unique: true, allowNull: false},
     password: {type: DataTypes.STRING, allowNull: false},
-    role: {type: DataTypes.STRING, defaultValue: 'USER'} //TODO: передалть поле, чтобы каждый пользователь мог иметь массив ролей
+    role: {type: DataTypes.ARRAY(DataTypes.STRING), defaultValue: ['USER']} //TODO: передалть поле, чтобы каждый пользователь мог иметь массив ролей
 })
 
 const Device = db.define('device', {
