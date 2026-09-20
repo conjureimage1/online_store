@@ -25,7 +25,6 @@ class DeviceController {
         }
     }
 
-
     async getDevices(req, res, next) {
         try {
             let {id, typeId, brandId, limit, page} = req.query
@@ -33,7 +32,7 @@ class DeviceController {
             limit = limit || 9
             let offset = page * limit - limit
             const devices = await deviceService.getDevices(id, typeId, brandId, limit, offset)
-            
+
             return res.json(devices)
         } catch (e) {
             next(e)
