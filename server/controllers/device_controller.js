@@ -33,7 +33,7 @@ class DeviceController {
             limit = limit || 9
             let offset = page * limit - limit
             const devices = await deviceService.getDevices(id, typeId, brandId, limit, offset)
-
+            
             return res.json(devices)
         } catch (e) {
             next(e)
